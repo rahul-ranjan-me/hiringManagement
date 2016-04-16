@@ -1,5 +1,5 @@
 # Hiring Management
-A simple tool for hiring management. It comes up with following feature
+A simple tool to manage the hiring process. It comes up with following feature
 * Candidate list
 * Search of candidate with various filters
 * Panel to schedule interview which shoot emails to both interviewer and interviewee
