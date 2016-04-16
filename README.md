@@ -15,3 +15,4 @@ A simple tool for hiring management
 * Navigate to client folder
 * run npm install
 * run npm dev
+* Open browser and hit http://localhost:8081/
