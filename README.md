@@ -21,6 +21,7 @@ A simple tool for hiring management. It comes up with following feature
 * navigate to downloaded folder/Server/{version}/bin
 * run mongod --dbpath {path where you want to store your db}
 * Crete two collections
+
 ### Collection name (candidates)
 
 ```javascript
