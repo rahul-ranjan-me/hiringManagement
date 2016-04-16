@@ -1,6 +1,11 @@
 # hiringManagement
 A simple tool for hiring management
 
+## Technology stack 
+* NodeJS for Server
+* MongoDB for database
+* React JS for UI
+
 ## Setting up server
 * Navigate to server folder
 * run npm install
