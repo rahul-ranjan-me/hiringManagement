@@ -1,0 +1,333 @@
+body{
+    background: #020031
+}
+
+.main-holder{
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.main-holder h3{
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.jumbotron {
+    position: relative;
+    padding:0;
+    z-index: 3;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
+    background: #020031;
+    background: -moz-linear-gradient(45deg, #020031 0%, #6d3353 100%);
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6d3353));
+    background: -webkit-linear-gradient(45deg, #020031 0%,#6d3353 100%);
+    background: -o-linear-gradient(45deg, #020031 0%,#6d3353 100%);
+    background: -ms-linear-gradient(45deg, #020031 0%,#6d3353 100%);
+    background: linear-gradient(45deg, #020031 0%,#6d3353 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
+    -webkit-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+    -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+    box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+}
+
+.subhead {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.jumbotron .container {
+    position: relative;
+    z-index: 2;
+}
+
+.subhead h1, .subhead .lead {
+    margin-right: 340px;
+}
+
+.jumbotron h1 {
+    font-size: 80px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
+}
+
+.subhead h1 {
+    font-size: 60px;
+}
+
+.subhead h1, .subhead .lead {
+    margin-right: 340px;
+}
+.subhead p {
+    margin-bottom: 20px;
+}
+.jumbotron p {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.25;
+    margin-bottom: 30px;
+}
+.lead {
+    margin-bottom: 20px;
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 30px;
+}
+
+.carbonad {
+    background-color: #393939;
+    border: 2px solid #E8E8E8;
+    height: 118px;
+    line-height: 1.2;
+    width: 305px;
+}
+.carbonad {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    margin-top: 0 !important;
+    padding: 15px;
+    height: auto !important;
+    overflow: hidden;
+    font-size: 13px !important;
+    line-height: 16px !important;
+    background: #222 !important;
+    background: rgba(0,0,0,.5) !important;
+    border: 0 !important;
+    border-radius: 4px;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.1);
+}
+
+
+
+/* ************************************
+Grid CSS starts here 
+************************************ */
+
+.table{
+    width: 100%;
+    background-color:#fff;
+}
+
+.table ul{
+    list-style-type:none;
+}
+
+.table li.tableRow,
+.table li.tableRow.tableSubChildren{
+    margin: 0 0 0;
+    width: 100%
+}
+
+.table .cols-heading + ul{
+    margin-left: 0
+}
+
+.table .cols-heading li.tableRow{
+    display:table;
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.table li.tableRow div.rowContainer{
+    display: table;
+    width: 100%
+}
+
+.table li.tableChildren{
+    cursor: pointer;
+}
+
+.table li.tableChildren:hover{
+    background-color: #FBF3F9
+}
+
+.table li.tableRow div.rowContainer ul{
+    width: 100%
+}
+
+.table li.tableRow, .table li.tableRow.tableSubChildren{
+    display: table;
+    border-bottom: 1px solid #eee;
+}
+
+.table li.tableRow.tableHeading{
+    border-bottom: none;
+}
+
+.table .tableHeading span.cell{
+    border-radius: 1px solid #777;
+    border-top: 1px solid #777;
+    cursor: default;
+    position: relative;
+}
+
+.table .tableHeading span.cell span{
+    font-weight: bold
+}
+
+.table span.cell,
+.table span.disable{
+    display: table-cell;
+    width: 30px;
+    padding: 5px
+}
+
+.table .toogleRow{
+    cursor: pointer;
+}
+
+.cols-heading{
+    margin: 0;
+    border-bottom: 1px solid #ccc
+}
+
+.cols-heading.tableHeading{
+    font-weight: bold;
+}
+
+.glyphicon.glyphicon-menu-right.glyphicon-menu-right-show{
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.table .tableHeading span.sorted:before{
+    background-color: #AD1982;
+    bottom: 0;
+    content: "";
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0
+}
+
+.table .sorting:after,
+.table .sorting_asc:after,
+.table .sorting_desc:after{
+    border: 5px solid transparent;
+    border-top-color: #AD1982;
+    content: "";
+    display: inline-block;
+    margin: -3px 0 0 5px;
+    position: relative;
+    top: 3px;
+}
+
+.table .sorting_asc:after{
+    border-bottom-color: #AD1982;
+    border-top-color: transparent;
+    top: -3px;
+}
+
+
+
+/* ************************************
+Grid CSS ends here 
+************************************ */
+
+.formAdd{
+    -moz-column-count:2;
+    -webkit-column-count:2;
+    column-count:2;
+    -moz-column-gap:10px;
+    -webkit-column-gap:10px;
+    column-gap:10px;
+    font-size:13px;
+    color:#000000;
+}
+
+.statusMessage{
+    border:1px solid #ccc;
+    padding: 5px;
+    height: 30px;
+    line-height: 30px;
+    background: #eee;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.statusMessage .error{
+    color:#ff0000;
+}
+
+.form-inline .control-group{
+    display: inline-block;
+    margin: 0 10px 10px 0;
+}
+
+.form-inline .control-group:last-child{
+    margin-right: 0
+}
+
+.search-candidates{
+    margin-bottom: 15px;
+}
+
+.search-candidates-form{
+    margin-bottom: 0;
+}
+
+span.search-button{
+    position: relative;
+    top: -51px;
+    color: #fff;
+    padding: 13px 15px 6px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    background: rgba(109,51,83,.5);
+    z-index: 2;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px #000;
+    cursor: pointer;
+}
+
+.container.searchfalse{
+    margin-bottom: -43px
+}
+
+.container.searchtrue,
+.container.searchfalse{
+    transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+.column2{
+    -webkit-column-count:2;
+    -moz-column-count:2;
+    column-count: 2
+}
+
+.view-candidate{
+    list-style-type: none;
+    -webkit-column-count:2;
+    -moz-column-count:2;
+    column-count: 2    
+}
+
+.view-candidate li{
+    display: block;
+    clear: both;
+    margin-bottom: 10px;
+}
+
+.view-candidate label{
+    width: 150px;
+    float: left;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.edit-candidate > div{
+    display: none;
+}
+
+.edit-candidate > div.control-group{
+    display: block;
+}
+
+#carbonads-container{display: none;}

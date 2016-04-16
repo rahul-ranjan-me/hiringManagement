@@ -1,0 +1,41 @@
+[
+	{
+		"firstName" : "Rahul",
+		"lastName" : "Ranjan",
+		"skill": "Javascript, HTML, CSS",
+		"position" : "Frontend Developer",
+		"email" : "rahul.smile@gmail.com",
+		"mobile" : "9971865606",
+		"status" : "Pending",
+		"screening" : {
+			"date": "12/01/2016",
+			"feedback" : "Good in technology"
+		},
+		"technicalRound" : {
+			"date": "12/01/2016",
+			"feedback" : "Good in technology"
+		},
+		"managementRound": null
+	},
+	{
+		"firstName" : "Dinesh",
+		"lastName" : "Joshi",
+		"skill": "Javascript, HTML, CSS",
+		"position" : "Frontend Developer",
+		"email" : "dineshintown@gmail.com",
+		"mobile" : "9711464514",
+		"status" : "Selected",
+		"screening" : {
+			"date": "1/01/2016",
+			"feedback" : "Good in technology"
+		},
+		"technicalRound" : {
+			"date": "2/01/2016",
+			"feedback" : "Good in technology"
+		},
+		"managementRound": {
+			"date": "2/01/2016",
+			"feedback" : "Excellent"
+		}
+	}
+]
