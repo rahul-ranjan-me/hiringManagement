@@ -7,7 +7,18 @@ var url = 'mongodb://localhost:27017/Resources';
 var bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var isSession = false;
+var username = null;
 
+app.use(cookieParser());
+app.use(session({
+  secret: 'first app',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true }
+}));
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({ extended: false }))
  
@@ -18,6 +29,14 @@ app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	next();
+});
+
+app.get('/isLoggedIn', function(req, res){
+	if(isSession){
+		res.send({status:true, username: username})
+	}else{
+		res.send({status:false})
+	}
 });
 
 app.post('/login', function(req, res){
@@ -46,10 +65,12 @@ app.post('/login', function(req, res){
 		}
 
 		var sendResponse = function(result, callback){
-			console.log(result)
 			if(result > 0){
+				isSession = true;
+				username = req.body.username;
 				msg.type = 'success';
 				msg.message = 'You are successfully logged in.';
+				msg.username =username;
 			}else{
 				msg.message = 'We are not able to identify you. Please login with correct credentials.';
 			}
@@ -66,6 +87,11 @@ app.post('/login', function(req, res){
 		});
 	});
 
+});
+
+app.get('/logout', function(req, res){
+	isSession = false;
+	res.send({type:'success', message:'You are logged out successfully.'});
 });
 
 app.post('/addCandidates', function (req, res) {
@@ -100,34 +126,37 @@ app.post('/addCandidates', function (req, res) {
 
 	};
 
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
 
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
+			var whetherToInsert = true;
 
-		var whetherToInsert = true;
+			var candidatesList = db.collection('candidates').find();
+			candidatesList.each(function(err, doc) {
+				assert.equal(err, null);
+				if (doc && (doc.mobile && doc.mobile === data.mobile) && (doc.email && doc.email === data.email)) {
+					whetherToInsert = false;
+				}
+				if(doc === null){
+					checkToInsert();
+				}
+			});
 
-		var candidatesList = db.collection('candidates').find();
-		candidatesList.each(function(err, doc) {
-			assert.equal(err, null);
-			if (doc && (doc.mobile && doc.mobile === data.mobile) && (doc.email && doc.email === data.email)) {
-				whetherToInsert = false;
-			}
-			if(doc === null){
-				checkToInsert();
+			var checkToInsert = function(){
+				if(whetherToInsert){
+					insertDocument(db, function() {
+						db.close();
+						res.end();
+					});
+				}else{
+					res.send({type:'error', message:'Candidate already exist.'});
+				}
 			}
 		});
-
-		var checkToInsert = function(){
-			if(whetherToInsert){
-				insertDocument(db, function() {
-					db.close();
-					res.end();
-				});
-			}else{
-				res.send({type:'error', message:'Candidate already exist.'});
-			}
-		}
-	});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 });
 
@@ -146,13 +175,18 @@ app.get('/getAllCandidates', function(req, res){
 		});
 	}
 
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		getAllCandidatesList(db, function() {
-			db.close();
-			res.send(candidateList);
+
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			getAllCandidatesList(db, function() {
+				db.close();
+				res.send(candidateList);
+			});
 		});
-	});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 });
 
@@ -170,14 +204,17 @@ app.get('/getCandidateDetails/:email', function(req, res){
 			}
 		});
 	}
-
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		getCandidate(db, function() {
-			db.close();
-			res.end();
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			getCandidate(db, function() {
+				db.close();
+				res.end();
+			});
 		});
-	});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 });
 
@@ -217,14 +254,17 @@ app.post('/updateCandidateFeedback/:email', function (req, res) {
 		);
 	};
 
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		updateFeedback(db, function(msg) {
-			db.close();
-			res.send(msg);
-		});
-	});	
-
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			updateFeedback(db, function(msg) {
+				db.close();
+				res.send(msg);
+			});
+		});	
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 });
 
 app.post('/addRecruiter', function (req, res) {
@@ -243,34 +283,37 @@ app.post('/addRecruiter', function (req, res) {
 
 	};
 
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
 
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
+			var whetherToInsert = true;
 
-		var whetherToInsert = true;
+			var recruiterList = db.collection('recruiter').find({recruiterName:req.body.recruiterName});
+			recruiterList.each(function(err, doc) {
+				assert.equal(err, null);
+				if (req.body.recruiterName.length < 1 || doc) {
+					whetherToInsert = false;
+				}
+				if(doc === null){
+					checkToInsert();
+				}
+			});
 
-		var recruiterList = db.collection('recruiter').find({recruiterName:req.body.recruiterName});
-		recruiterList.each(function(err, doc) {
-			assert.equal(err, null);
-			if (req.body.recruiterName.length < 1 || doc) {
-				whetherToInsert = false;
-			}
-			if(doc === null){
-				checkToInsert();
+			var checkToInsert = function(){
+				if(whetherToInsert){
+					insertRecruiter(db, function() {
+						db.close();
+						res.end();
+					});
+				}else{
+					res.send({type:'error', message:'Recruiter already exist.'});
+				}
 			}
 		});
-
-		var checkToInsert = function(){
-			if(whetherToInsert){
-				insertRecruiter(db, function() {
-					db.close();
-					res.end();
-				});
-			}else{
-				res.send({type:'error', message:'Recruiter already exist.'});
-			}
-		}
-	});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 });
 
@@ -297,14 +340,17 @@ app.post('/searchCandidate', function (req, res) {
 		});
 	};
 
-
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		findCandidate(db, function() {
-			db.close();
-			res.end();
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			findCandidate(db, function() {
+				db.close();
+				res.end();
+			});
 		});
-	});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 });
 
@@ -326,14 +372,17 @@ app.post('/updateCandidate/:email', function (req, res) {
 		);
 	};
 
-	MongoClient.connect(url, function(err, db) {
-		assert.equal(null, err);
-		updateFeedback(db, function(msg) {
-			db.close();
-			res.send(msg);
-		});
-	});	
-
+	if(isSession){
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			updateFeedback(db, function(msg) {
+				db.close();
+				res.send(msg);
+			});
+		});	
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 });
 
 app.post('/schedule/:email', function(req, res){
@@ -372,13 +421,17 @@ app.post('/schedule/:email', function(req, res){
 	   		'</div>'
 	};
 
-	transporter.sendMail(interviewerMail, function(error, info){
-	    if(error){
-	        res.json({type:'error', message:'An error occured while scheduling the interview.'});
-	    }else{
-	        sendIntervieweeMail();
-	    };
-	});
+	if(isSession){
+		transporter.sendMail(interviewerMail, function(error, info){
+		    if(error){
+		        res.json({type:'error', message:'An error occured while scheduling the interview.'});
+		    }else{
+		        sendIntervieweeMail();
+		    };
+		});
+	}else{
+		res.send({type:'notLoggedIn', message:'Please login with valid credentials.'});
+	}
 
 	var sendIntervieweeMail = function(){
 		transporter.sendMail(intervieweeMail, function(error, info){

@@ -13,6 +13,11 @@ body{
     margin-bottom: 20px;
 }
 
+.nav a.active{
+    background: #000;
+    color: #fff
+}
+
 .jumbotron {
     position: relative;
     padding:0;

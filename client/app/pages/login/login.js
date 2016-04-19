@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import $ from 'jquery';
 
 import Form from '../../components/form';
-
+import loginStatus from './loginStatus';
 
 export default class CandidateList extends React.Component {
 	constructor(props){
@@ -46,6 +46,8 @@ export default class CandidateList extends React.Component {
 			success: function(result){
 				that.messageProp = result;
 				if(result.type === 'success'){
+					loginStatus.status = true;
+					loginStatus.username = result.username;
 					that.setState({message: true});
 					browserHistory.push('/listCandidates');
 				}else{
@@ -69,7 +71,7 @@ export default class CandidateList extends React.Component {
 								{message}
 							</div> : 
 						null}
-
+						<h3>Login</h3>
 						<Form 
 							metadata={this.metadata} 
 							onSubmitData={this.submitData} 

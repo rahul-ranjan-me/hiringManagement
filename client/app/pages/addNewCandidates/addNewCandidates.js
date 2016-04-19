@@ -10,6 +10,7 @@ import Form from '../../components/form';
 export default class AddNewCandidates extends Component{
 	constructor(props){
 		super(props);
+		this.getLoggedInStatus();
 		this.submitData = this.submitData.bind(this);
 		this.state = {
 			metadata : [],
@@ -44,6 +45,18 @@ export default class AddNewCandidates extends Component{
 
 	componentDidMount(){
 		this.setState({metadata:metadata})
+	}
+
+	getLoggedInStatus(){
+		$.ajax({
+			url: "http://localhost:8082/isLoggedIn",
+			method: 'get',
+			success: function(result){
+				if(!result.status){
+					browserHistory.push('/login');
+				}
+	      	}
+	    });
 	}
 
 	submitData(data){

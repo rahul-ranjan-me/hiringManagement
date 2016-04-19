@@ -24,9 +24,15 @@ export default class Layout extends Component{
 	getCandidateRecords(){
 		var that = this;
 		$.ajax({
-			url: "http://localhost:8082/getAllCandidates", success: function(result){
-	      	that.setState({candidateList: result})
-	    }});
+			url: "http://localhost:8082/getAllCandidates", 
+			success: function(result){
+				if(result.type === 'notLoggedIn'){
+					browserHistory.push('/login');
+				}else{
+	      			that.setState({candidateList: result})
+	      		}
+	    	}
+	    });
 	}
 
 	onSelected(obj){
