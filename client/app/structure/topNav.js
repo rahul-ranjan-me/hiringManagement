@@ -16,6 +16,10 @@ export default class TopNav extends Component{
 								<li><Link to={`/`}>Home</Link></li>
 								<li><Link to={`/addCandidates`}>Add New Candidate</Link></li>
 							</ul>
+
+							<ul className="nav pull-right">
+								<li><Link to={`/login`}>Login</Link></li>
+							</ul>
 						</div>
 					</div>
 				</div>

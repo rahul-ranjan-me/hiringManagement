@@ -34,6 +34,8 @@ export default class Form extends Component{
 		let createForm = (fieldType, key) => {
 			if(fieldType.type === 'text'){
 				return <TypeText key={key} field = {fieldType} onChange={this.handleChange} />
+			}else if(fieldType.type === 'password'){
+				return <TypePassword key={key} field = {fieldType} onChange={this.handleChange}  />
 			}else if(fieldType.type === 'textarea'){
 				return <TypeTextarea key={key} field = {fieldType} onChange={this.handleChange}  />
 			}else if(fieldType.type === 'select'){
@@ -77,6 +79,35 @@ export class TypeText extends Component {
 						id={this.props.field.id} 
 						placeholder={this.props.field.placeholder ? this.props.field.placeholder:null} 
 						ref="textInput"
+						value={this.props.field.value ? this.props.field.value:undefined} 
+						onChange={this.handleChange}
+					/>
+				</div>
+			</div>
+		)
+	}
+}
+
+export class TypePassword extends Component {
+	constructor(props){
+		super(props);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(){
+		this.props.onChange(this.refs.textPassword.value, this.props.field);
+	}
+
+	render(){
+		return(
+			<div className="control-group">
+				<label className="control-label" htmlFor={this.props.field.id}>{this.props.field.label}</label>
+				<div className="controls">
+					<input 
+						type="password" 
+						id={this.props.field.id} 
+						placeholder={this.props.field.placeholder ? this.props.field.placeholder:null} 
+						ref="textPassword"
 						value={this.props.field.value ? this.props.field.value:undefined} 
 						onChange={this.handleChange}
 					/>

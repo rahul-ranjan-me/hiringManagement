@@ -20,6 +20,54 @@ app.use(function(req, res, next) {
 	next();
 });
 
+app.post('/login', function(req, res){
+
+	var getCandidate = function(db, callback){
+		var msg = {
+			type: 'error',
+			message : ''
+		};
+
+		if(!req.body.username.length || !req.body.password.length){
+			msg.message ='Please provide correct username and password';
+			callback(msg);
+		}else{
+			var resultFound = 0,
+				candidatesList = db.collection('usersdb').find({"username":req.body.username});
+			
+			candidatesList.each(function(err, doc) {
+				assert.equal(err, null);
+				if(doc !== null && (doc.username && doc.username === req.body.username) && (doc.password && doc.password === req.body.password)) {
+					resultFound = resultFound + 1;
+				} else if(doc === null) {
+					sendResponse(resultFound, callback);
+				}
+			});
+		}
+
+		var sendResponse = function(result, callback){
+			console.log(result)
+			if(result > 0){
+				msg.type = 'success';
+				msg.message = 'You are successfully logged in.';
+			}else{
+				msg.message = 'We are not able to identify you. Please login with correct credentials.';
+			}
+			callback(msg);
+		}
+		
+	}
+
+	MongoClient.connect(url, function(err, db) {
+		assert.equal(null, err);
+		getCandidate(db, function(msg) {
+			db.close();
+			res.send(msg);
+		});
+	});
+
+});
+
 app.post('/addCandidates', function (req, res) {
 	var data = {};
 	for(var i in req.body){
