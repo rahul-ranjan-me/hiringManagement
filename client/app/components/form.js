@@ -79,7 +79,7 @@ export class TypeText extends Component {
 						id={this.props.field.id} 
 						placeholder={this.props.field.placeholder ? this.props.field.placeholder:null} 
 						ref="textInput"
-						value={this.props.field.value ? this.props.field.value:undefined} 
+						defaultValue={this.props.field.value ? this.props.field.value:undefined} 
 						onChange={this.handleChange}
 					/>
 				</div>
@@ -108,7 +108,7 @@ export class TypePassword extends Component {
 						id={this.props.field.id} 
 						placeholder={this.props.field.placeholder ? this.props.field.placeholder:null} 
 						ref="textPassword"
-						value={this.props.field.value ? this.props.field.value:undefined} 
+						defaultValue={this.props.field.value ? this.props.field.value:undefined} 
 						onChange={this.handleChange}
 					/>
 				</div>
@@ -136,7 +136,7 @@ export class TypeTextarea extends Component {
 						id={this.props.field.id}
 						placeholder={this.props.field.placeholder ? this.props.field.placeholder:null}
 						ref="textareaInput"
-						value={this.props.field.value ? this.props.field.value:undefined} 
+						defaultValue={this.props.field.value ? this.props.field.value:undefined}
 						onChange={this.handleChange}
 					>
 					</textarea>
@@ -168,6 +168,7 @@ export class Select extends Component {
 					<select 
 						id={this.props.field.id} 
 						onChange={this.handleChange} 
+						defaultValue={this.props.field.value ? this.props.field.value:undefined}
 						ref="selectInput"
 					>
 						{this.props.field.options.map(createOption)}
