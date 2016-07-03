@@ -1,4 +1,4 @@
-# Hiring Management
+# Hiring Management (ReactJS)
 A simple tool to manage the hiring process. It comes up with following feature
 * Candidate list
 * Search of candidate with various filters
